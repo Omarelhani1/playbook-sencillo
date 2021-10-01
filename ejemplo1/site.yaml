@@ -1,0 +1,42 @@
+- hosts: servidores
+  become: true
+  tasks:
+   - name: "Crear usuario con mi nombre"
+     user:
+       name: Omar
+       password: asdasd
+   - name: "Descargar url"
+     get_url:
+       url: https://wordpress.org/latest.zip
+       dest: /home/Omar/wordpress-5.8.1.zip
+       mode: '0440'
+   - name: Instalar unzip
+     command: sudo apt install unzip
+     register: mymotd
+   - name: "Descomprimir el archivo descargado"
+     unarchive:
+       src: /home/Omar/wordpress-5.8.1.zip
+       dest: /home/Omar
+       remote_src: True
+   - name: Instalar paquete de mariadb
+     apt:
+       pkg:
+         - mariadb-server
+         - python3-mysqldb
+   - name: Crear base de datos
+     mysql_db:
+       name: omar_wordpress
+       state: present
+   - name: crear usuario administrador de la base de datos
+     mysql_user:
+       name: Omar
+       password: asdasd
+       priv: 
+         'omar_wordpress.*': 'ALL,GRANT'
+       state: present
+   - name: Clonar repositorio de github
+     git:
+       repo: https://github.com/josedom24/ansible_ejemplos.git
+       dest: /home/Omar/github
+       clone: yes
+       update: yes
