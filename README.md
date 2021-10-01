@@ -1,5 +1,5 @@
 # playbook-sencillo
-h2. Prepara una máquina virtual en KVM que es la que vamos a configurar de forma automática con ansible.
+**Prepara una máquina virtual en KVM que es la que vamos a configurar de forma automática con ansible**
 * Debes crear un playbook que realice las siguientes tareas de forma automática:
 * Crear un usuario en el servidor remoto que tenga tu nombre.
 * Descarga el fichero desde la url https://wordpress.org/latest.zip.
