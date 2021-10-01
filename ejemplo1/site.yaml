@@ -11,8 +11,9 @@
        dest: /home/Omar/wordpress-5.8.1.zip
        mode: '0440'
    - name: Instalar unzip
-     command: sudo apt install unzip
-     register: mymotd
+     apt:
+       update_cache: true
+       name: unzip
    - name: "Descomprimir el archivo descargado"
      unarchive:
        src: /home/Omar/wordpress-5.8.1.zip
@@ -34,6 +35,9 @@
        priv: 
          'omar_wordpress.*': 'ALL,GRANT'
        state: present
+   - name: Instalar git
+     apt:
+       name: git
    - name: Clonar repositorio de github
      git:
        repo: https://github.com/josedom24/ansible_ejemplos.git
